@@ -1,8 +1,10 @@
 package contas
 
+import "banco/clientes"
+
 type ContaCorrente struct {
 	//quando os atributos do struct estao em minusculo ee fica privado, quanto a primeira maiuscula fica publico
-	Titular string
+	Titular clientes.Titular
 	NumeroAgencia int
 	NumeroConta int
 	Saldo float64
