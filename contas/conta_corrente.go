@@ -5,8 +5,7 @@ import "banco/clientes"
 type ContaCorrente struct {
 	//quando os atributos do struct estao em minusculo ee fica privado, quanto a primeira maiuscula fica publico
 	Titular clientes.Titular
-	NumeroAgencia int
-	NumeroConta int
+	NumeroAgencia, NumeroConta int
 	saldo float64
 }
 
