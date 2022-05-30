@@ -17,12 +17,15 @@ func (conta *ContaCorrente) Sacar(valor float64) string {
 	}
 	return "Saldo insuficiente"
 }
-func (conta *ContaCorrente) Depositar(valor float64) string {
+
+// (string, float64) range de retornos obrigatorios no caso de retornos multiplos
+
+func (conta *ContaCorrente) Depositar(valor float64) (string, float64) {
 	if valor > 0 {
 		conta.saldo += valor
-		return "deposito realizado com sucesso"
+		return "deposito realizado com sucesso", conta.saldo
 	}
-	return "Volres incorretos"
+	return "Valores incorretos", conta.saldo
 }
 
 func main()  {
@@ -45,6 +48,7 @@ func main()  {
 	fmt.Println(contaDoCledson.Sacar(-25.00))
 	fmt.Println(contaDoCledson.saldo)
 
-	fmt.Println(contaDoCledson.Depositar(10))
-	fmt.Println(contaDoCledson.saldo)
+	status, valor := contaDoCledson.Depositar(10)
+
+	fmt.Println(status,valor)
 }
