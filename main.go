@@ -19,7 +19,6 @@ func (conta *ContaCorrente) Sacar(valor float64) string {
 }
 
 // (string, float64) range de retornos obrigatorios no caso de retornos multiplos
-
 func (conta *ContaCorrente) Depositar(valor float64) (string, float64) {
 	if valor > 0 {
 		conta.saldo += valor
@@ -27,10 +26,20 @@ func (conta *ContaCorrente) Depositar(valor float64) (string, float64) {
 	}
 	return "Valores incorretos", conta.saldo
 }
+func (conta *ContaCorrente) Tranferencia(valor float64, destino *ContaCorrente) (string, float64, float64) {
+	if valor > 0 && valor < conta.saldo {
+		conta.Sacar(valor)
+		destino.Depositar(valor)
+		return "Transferência realizada com sucesso", conta.saldo, destino.saldo
+	} else if valor < 0 {
+		return "Valores incorretos", valor, conta.saldo
+	}
+	return "Saldo insuficiente", valor, conta.saldo
+}
 
 func main()  {
 	contaDoCledson := ContaCorrente{titular: "Cledson", numeroAgencia: 589, numeroConta: 123456, saldo: 125.50}
-	// contaDaRoberia := ContaCorrente{"Roberia", 222, 111222, 200}
+	contaDaRoberia := ContaCorrente{"Roberia", 222, 111222, 200}
 	// o asterisco é um PONTEIRO para o local da memoria
 	var contaDaCleide *ContaCorrente
 	contaDaCleide = new(ContaCorrente)
@@ -51,4 +60,14 @@ func main()  {
 	status, valor := contaDoCledson.Depositar(10)
 
 	fmt.Println(status,valor)
+	
+	fmt.Println(contaDoCledson.saldo, contaDaRoberia.saldo)
+	fmt.Println(contaDoCledson.Tranferencia(50, &contaDaRoberia))
+	
+	fmt.Println(contaDoCledson.saldo, contaDaRoberia.saldo)
+	fmt.Println(contaDoCledson.Tranferencia(500, &contaDaRoberia))
+	
+	fmt.Println(contaDoCledson.saldo, contaDaRoberia.saldo)
+	fmt.Println(contaDoCledson.Tranferencia(-50, &contaDaRoberia))
+
 }
